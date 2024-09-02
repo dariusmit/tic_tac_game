@@ -2,16 +2,17 @@ import { useState } from "react";
 
 interface type {
   id: number;
-  selected: boolean;
+  mark: string;
+  isClicked: boolean;
 }
 
 function App() {
   let data: type[] = [];
-  let mark: string = "X";
+  let [mark, setMark] = useState("X");
 
   function initialData() {
     for (let i = 0; i < 9; i++) {
-      data.push({ id: i, selected: false });
+      data.push({ id: i, mark: "", isClicked: false });
     }
     return data;
   }
@@ -19,10 +20,21 @@ function App() {
   let [box, changeBox] = useState(initialData());
 
   function handleClick(id: number) {
+    console.log("Item with the id of " + id + " was clicked!");
     changeBox(
       box.map((prev) => {
         if (prev.id === id) {
-          return { ...prev, selected: true };
+          if (prev.isClicked === false) {
+            if (mark === "X") {
+              setMark("O");
+              return { ...prev, mark: mark, isClicked: true };
+            }
+            if (mark === "O") {
+              setMark("X");
+              return { ...prev, mark: mark, isClicked: true };
+            }
+          }
+          return prev;
         }
         return prev;
       })
@@ -38,13 +50,16 @@ function App() {
         {box.map((item) => {
           return (
             <div onClick={() => handleClick(item.id)} key={String(item.id)}>
-              {item.selected === true ? (
-                <p className="font-bold text-2xl">{mark}</p>
+              {item.isClicked === true ? (
+                <p className="font-bold text-2xl">{item.mark}</p>
               ) : null}
             </div>
           );
         })}
       </div>
+      <button onClick={() => console.log(JSON.stringify(box, undefined, 2))}>
+        Test state values
+      </button>
     </div>
   );
 }
