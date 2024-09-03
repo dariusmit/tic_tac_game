@@ -1,3 +1,1 @@
-React + TypeScript + Tailwin CSS
-Tic tac toe game
-Basic functionality working. Open console log in dev tools to see winning results.
+React + TypeScript + Tailwin CSS. Tic tac toe game. Basic functionality for now. Game is working. Open console log in dev tools to see winning results. Planning to optimize code and make it more sophisticated later.
