@@ -286,7 +286,7 @@ function App() {
             if (prev.isClicked === false) {
               if (mark === "X") {
                 setMark("O");
-                return { ...prev, mark: mark, isClicked: true };
+                return { ...prev, mark: "X", isClicked: true };
               }
             }
             return prev;
@@ -304,14 +304,18 @@ function App() {
   //Bad logic here, need to fix
   useEffect(() => {
     if (gameType === "cpu") {
+      let randomIndex = getRandomInt(8);
       changeBox(
         box.map((prev) => {
-          if (prev.isClicked === false) {
-            console.log("match");
-            if (prev.isClicked === false) {
+          if (prev.id === randomIndex) {
+            if (box[randomIndex].isClicked === false) {
               if (mark === "O") {
                 setMark("X");
-                return { ...prev, mark: mark, isClicked: true };
+                return {
+                  ...prev,
+                  mark: "O",
+                  isClicked: true,
+                };
               }
             }
           }
@@ -340,6 +344,14 @@ function App() {
               checked={radioStatus}
               onClick={() => setRadioStatus(true)}
             />
+          </div>
+          <div>
+            <button
+              onClick={() => console.log(JSON.stringify(box, undefined, 2))}
+              className="text-red-500"
+            >
+              Test state
+            </button>
           </div>
           <div className="flex items-center">
             <p className="pr-2">VS computer</p>
