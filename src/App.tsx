@@ -1,20 +1,17 @@
 import { useEffect, useState } from "react";
-
-interface type {
-  id: number;
-  mark: string;
-  isClicked: boolean;
-}
+import WinBox from "./components/WinBox";
+import BoardType from "./types/boardType";
 
 let PlayerClickID = 0;
+let winningMark = "";
 
 function App() {
-  let data: type[] = [];
+  let data: BoardType[] = [];
   let [mark, setMark] = useState("X");
 
   function initialData() {
     for (let i = 0; i < 9; i++) {
-      data.push({ id: i, mark: "", isClicked: false });
+      data.push({ id: i, mark: "", isClicked: false, isHighlighted: false });
     }
     return data;
   }
@@ -24,6 +21,7 @@ function App() {
   let [xCounter, setXCounter] = useState(0);
   let [oCounter, setOCounter] = useState(0);
   let [tieCounter, setTieCounter] = useState(0);
+  let [winner, SetWinner] = useState(false);
 
   //Winning Logic
   useEffect(() => {
@@ -34,224 +32,162 @@ function App() {
       board[2].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[3].mark === "X" &&
       board[4].mark === "X" &&
       board[5].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[6].mark === "X" &&
       board[7].mark === "X" &&
       board[8].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[0].mark === "X" &&
       board[3].mark === "X" &&
       board[6].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[1].mark === "X" &&
       board[4].mark === "X" &&
       board[7].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[2].mark === "X" &&
       board[5].mark === "X" &&
       board[8].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[0].mark === "X" &&
       board[4].mark === "X" &&
       board[8].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "X";
+      SetWinner(true);
+    } else if (
       board[6].mark === "X" &&
       board[4].mark === "X" &&
       board[2].mark === "X"
     ) {
       console.log("X won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setXCounter((prev) => prev + 1);
+      winningMark = "X";
+      SetWinner(true);
     }
     //O winning logic
-    if (
+    else if (
       board[0].mark === "O" &&
       board[1].mark === "O" &&
       board[2].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[3].mark === "O" &&
       board[4].mark === "O" &&
       board[5].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[6].mark === "O" &&
       board[7].mark === "O" &&
       board[8].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[0].mark === "O" &&
       board[3].mark === "O" &&
       board[6].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[1].mark === "O" &&
       board[4].mark === "O" &&
       board[7].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[2].mark === "O" &&
       board[5].mark === "O" &&
       board[8].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[0].mark === "O" &&
       board[4].mark === "O" &&
       board[8].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
-    }
-    if (
+      winningMark = "O";
+      SetWinner(true);
+    } else if (
       board[6].mark === "O" &&
       board[4].mark === "O" &&
       board[2].mark === "O"
     ) {
       console.log("O won! Game starts again.");
-      changeBoard(
-        board.map((prev) => {
-          return { ...prev, mark: "", isClicked: false };
-        })
-      );
       setMark("X");
       setOCounter((prev) => prev + 1);
+      winningMark = "O";
+      SetWinner(true);
     } else {
       //A draw case. If no winners emerged.
       if (
@@ -266,19 +202,18 @@ function App() {
         board[8].isClicked === true
       ) {
         console.log("A Tie! Game starts again.");
-        changeBoard(
-          board.map((prev) => {
-            return { ...prev, mark: "", isClicked: false };
-          })
-        );
         setMark("X");
         setTieCounter((prev) => prev + 1);
+        winningMark = "Tie";
+        SetWinner(true);
       }
     }
   }, [board]);
 
   let [gameType, setGameType] = useState("solo");
   let [playerMove, registerPlayerMove] = useState(0);
+  let [cpuMoveCount, increaseCpuMoveCount] = useState(0);
+
   let randomNumber = 0;
 
   function getPlayerClickID(id: number) {
@@ -309,35 +244,65 @@ function App() {
     } else if (gameType === "cpu") {
       if (mark === "X") {
         getPlayerClickID(id);
-        changeBoard(
-          board.map((prev) => {
-            console.log("Player clicked at id of " + id);
-            if (prev.id === id && prev.isClicked === false) {
-              registerPlayerMove((prev) => (prev += 1));
-              setMark("O");
-              return { ...prev, mark: "X", isClicked: true };
-            }
-            return prev;
-          })
-        );
+        if (cpuMoveCount === 0) {
+          changeBoard(
+            board.map((prev) => {
+              console.log("Player clicked at id of " + id);
+              if (prev.id === id && prev.isClicked === false) {
+                registerPlayerMove((prev) => (prev += 1));
+                setMark("O");
+                return { ...prev, mark: "X", isClicked: true };
+              }
+              return prev;
+            })
+          );
+        }
+        if (cpuMoveCount > 0) {
+          changeBoard(
+            board.map((prev) => {
+              console.log("Player clicked at id of " + id);
+              if (prev.id === id && prev.isClicked === false) {
+                registerPlayerMove((prev) => (prev += 1));
+                setMark("O");
+                return { ...prev, mark: "X", isClicked: true };
+              }
+              return prev;
+            })
+          );
+        }
       } else if (mark === "O") {
         getPlayerClickID(id);
-        changeBoard(
-          board.map((prev) => {
-            console.log("Player clicked at id of " + id);
-            if (prev.id === id && prev.isClicked === false) {
-              registerPlayerMove((prev) => (prev += 1));
-              setMark("X");
-              return { ...prev, mark: "O", isClicked: true };
-            }
-            return prev;
-          })
-        );
+        if (cpuMoveCount === 0) {
+          changeBoard(
+            board.map((prev) => {
+              console.log("Player clicked at id of " + id);
+              if (prev.id === id && prev.isClicked === false) {
+                registerPlayerMove((prev) => (prev += 1));
+                setMark("O");
+                return { ...prev, mark: "X", isClicked: true };
+              }
+              return prev;
+            })
+          );
+        }
+        if (cpuMoveCount > 0) {
+          changeBoard(
+            board.map((prev) => {
+              console.log("Player clicked at id of " + id);
+              if (prev.id === id && prev.isClicked === false) {
+                registerPlayerMove((prev) => (prev += 1));
+                setMark("O");
+                return { ...prev, mark: "X", isClicked: true };
+              }
+              return prev;
+            })
+          );
+        }
       }
     }
   }
 
-  let [emptyCellsArray, updateEmptyCellsObject] = useState<type[]>([]);
+  let [emptyCellsArray, updateEmptyCellsObject] = useState<BoardType[]>([]);
   let randomNumbersArray: number[] = [];
 
   useEffect(() => {
@@ -367,6 +332,8 @@ function App() {
     if (gameType === "cpu") {
       if (mark === "O") {
         console.log("Player move registered");
+        console.log("CPU is thinking");
+
         changeBoard(
           board.map((prev) => {
             console.log(
@@ -384,8 +351,12 @@ function App() {
             return prev;
           })
         );
+
+        increaseCpuMoveCount((prev) => (prev += 1));
       } else if (mark === "X") {
         console.log("Player move registered");
+        console.log("CPU is thinking");
+
         changeBoard(
           board.map((prev) => {
             console.log(
@@ -403,6 +374,8 @@ function App() {
             return prev;
           })
         );
+
+        increaseCpuMoveCount((prev) => (prev += 1));
       }
     }
   }, [playerMove]);
@@ -413,30 +386,6 @@ function App() {
     <div className="flex flex-col w-full h-screen">
       <div className="w-[604px] h-auto mx-auto my-auto">
         <div className="pb-4">
-          <div className="flex flex-col">
-            <button
-              onClick={() => console.log(JSON.stringify(board, undefined, 2))}
-              className="text-red-500"
-            >
-              Test board state
-            </button>
-            <button
-              onClick={() =>
-                console.log(JSON.stringify(emptyCellsArray, undefined, 2))
-              }
-              className="text-red-500"
-            >
-              Test empty cells state
-            </button>
-            <button
-              onClick={() =>
-                console.log("---------------------------------------")
-              }
-              className="text-red-500"
-            >
-              Seperator
-            </button>
-          </div>
           <p>How you want to play?</p>
           <div className="flex items-center">
             <p className="pr-2">Solo</p>
@@ -451,7 +400,6 @@ function App() {
               onClick={() => setRadioStatus(true)}
             />
           </div>
-
           <div className="flex items-center">
             <p className="pr-2">VS computer</p>
             <input
@@ -464,7 +412,6 @@ function App() {
               onClick={() => setRadioStatus(false)}
             />
           </div>
-          <p className="font-bold">{gameType}</p>
         </div>
         <div className="flex items-center justify-between [&_div]:pb-4">
           <div>
@@ -482,9 +429,12 @@ function App() {
                   })
                 );
                 setMark("X");
+                setXCounter(0);
+                setOCounter(0);
+                setTieCounter(0);
               }}
             >
-              Start new game
+              Reset Values
             </button>
           </div>
         </div>
@@ -517,6 +467,14 @@ function App() {
           </div>
         </div>
       </div>
+      {winner ? (
+        <WinBox
+          winner={winningMark}
+          SetWinner={SetWinner}
+          board={board}
+          changeBoard={changeBoard}
+        />
+      ) : null}
     </div>
   );
 }
