@@ -9,6 +9,10 @@ function App() {
   let data: BoardType[] = [];
   let [mark, setMark] = useState("X");
 
+  const savedBoardData: BoardType[] = JSON.parse(
+    localStorage.getItem("board data") || "[]"
+  );
+
   function initialData() {
     for (let i = 0; i < 9; i++) {
       data.push({ id: i, mark: "", isClicked: false, isHighlighted: false });
@@ -16,15 +20,45 @@ function App() {
     return data;
   }
 
-  let [board, changeBoard] = useState(initialData);
+  let [board, changeBoard] = useState(() => {
+    return savedBoardData.length > 0 ? savedBoardData : initialData();
+  });
 
-  let [xCounter, setXCounter] = useState(0);
-  let [oCounter, setOCounter] = useState(0);
-  let [tieCounter, setTieCounter] = useState(0);
+  const savedXCounter = String(localStorage.getItem("x win count") || "");
+  const savedOCounter = String(localStorage.getItem("o win count") || "");
+  const savedTieCounter = String(localStorage.getItem("tie win count") || "");
+
+  let [xCounter, setXCounter] = useState(() => {
+    return Number(savedXCounter) > 0 ? Number(savedXCounter) : 0;
+  });
+  let [oCounter, setOCounter] = useState(() => {
+    return Number(savedOCounter) > 0 ? Number(savedOCounter) : 0;
+  });
+  let [tieCounter, setTieCounter] = useState(() => {
+    return Number(savedTieCounter) > 0 ? Number(savedTieCounter) : 0;
+  });
   let [winner, SetWinner] = useState(false);
+
+  useEffect(() => {
+    console.log("x win count changed");
+    localStorage.setItem("x win count", String(xCounter));
+  }, [xCounter]);
+
+  useEffect(() => {
+    console.log("o win count changed");
+    localStorage.setItem("o win count", String(oCounter));
+  }, [oCounter]);
+
+  useEffect(() => {
+    console.log("tie win count changed");
+    localStorage.setItem("tie win count", String(tieCounter));
+  }, [tieCounter]);
 
   //Winning Logic
   useEffect(() => {
+    updateEmptyCellsObject(board.filter((prev) => prev.isClicked === false));
+    console.log("board data changed");
+    localStorage.setItem("board data", JSON.stringify(board));
     //X winning logic
     if (
       board[0].mark === "X" &&
@@ -33,7 +67,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -43,7 +77,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -53,7 +87,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -63,7 +97,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -73,7 +107,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -83,7 +117,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -93,7 +127,7 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     } else if (
@@ -103,19 +137,19 @@ function App() {
     ) {
       console.log("X won! Game starts again.");
       setMark("X");
-      setXCounter((prev) => prev + 1);
+      setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
       SetWinner(true);
     }
     //O winning logic
-    else if (
+    if (
       board[0].mark === "O" &&
       board[1].mark === "O" &&
       board[2].mark === "O"
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -125,7 +159,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -135,7 +169,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -145,7 +179,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -155,7 +189,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -165,7 +199,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -175,7 +209,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else if (
@@ -185,7 +219,7 @@ function App() {
     ) {
       console.log("O won! Game starts again.");
       setMark("X");
-      setOCounter((prev) => prev + 1);
+      setOCounter((prev) => Number(prev) + 1);
       winningMark = "O";
       SetWinner(true);
     } else {
@@ -203,14 +237,23 @@ function App() {
       ) {
         console.log("A Tie! Game starts again.");
         setMark("X");
-        setTieCounter((prev) => prev + 1);
+        setTieCounter((prev) => Number(prev) + 1);
         winningMark = "Tie";
         SetWinner(true);
       }
     }
   }, [board]);
 
-  let [gameType, setGameType] = useState("solo");
+  const savedGameType = localStorage.getItem("game type") || "";
+
+  let [gameType, setGameType] = useState(() => {
+    return savedGameType === "" ? "solo" : savedGameType;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("game type", gameType);
+  }, [gameType]);
+
   let [playerMove, registerPlayerMove] = useState(0);
   let [cpuMoveCount, increaseCpuMoveCount] = useState(0);
 
@@ -305,9 +348,11 @@ function App() {
   let [emptyCellsArray, updateEmptyCellsObject] = useState<BoardType[]>([]);
   let randomNumbersArray: number[] = [];
 
+  /*
   useEffect(() => {
     updateEmptyCellsObject(board.filter((prev) => prev.isClicked === false));
   }, [board]);
+  */
 
   function GetRandomIndex() {
     for (let i = 0; i < emptyCellsArray.length; i++) {

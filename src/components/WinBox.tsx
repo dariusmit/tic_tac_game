@@ -117,7 +117,7 @@ function WinBox({ winner, SetWinner, board, changeBoard }: Props) {
     ) {
       changeBoard(
         board.map((prev) => {
-          if (prev.id === 8) {
+          if (prev.id === 2) {
             return { ...prev, isHighlighted: true };
           }
           if (prev.id === 5) {
@@ -277,7 +277,7 @@ function WinBox({ winner, SetWinner, board, changeBoard }: Props) {
     ) {
       changeBoard(
         board.map((prev) => {
-          if (prev.id === 8) {
+          if (prev.id === 2) {
             return { ...prev, isHighlighted: true };
           }
           if (prev.id === 5) {
@@ -336,27 +336,30 @@ function WinBox({ winner, SetWinner, board, changeBoard }: Props) {
     colorWinningMarks();
   }, [winner]);
 
+  function closeAndReset() {
+    SetWinner(false);
+    changeBoard(
+      board.map((prev) => {
+        return {
+          ...prev,
+          mark: "",
+          isClicked: false,
+          isHighlighted: false,
+        };
+      })
+    );
+  }
+
   return (
     <>
-      <div className="fixed w-full h-screen opacity-80 bg-black z-9" />
-      <div className="flex flex-col items-center justify-center fixed w-[304px] h-auto bg-white z-99 center top-[50%] left-[50%]">
-        <button
-          onClick={() => {
-            SetWinner(false);
-            changeBoard(
-              board.map((prev) => {
-                return {
-                  ...prev,
-                  mark: "",
-                  isClicked: false,
-                  isHighlighted: false,
-                };
-              })
-            );
-          }}
-        >
-          Close it
-        </button>
+      <div
+        onClick={() => closeAndReset()}
+        className="fixed w-full h-screen opacity-80 bg-black z-9"
+      />
+      <div
+        onClick={() => closeAndReset()}
+        className="flex flex-col items-center justify-center fixed w-[304px] h-auto bg-white z-99 center top-[50%] left-[50%]"
+      >
         <p className="text-red-500">
           {winner === "Tie" ? "It's a Draw" : winner + " won"}
         </p>
