@@ -18,7 +18,6 @@ function WinBox({
   changeBoard,
   setGameType,
   player1Mark,
-  player2Mark,
 }: Props) {
   function colorWinningMarks() {
     if (
