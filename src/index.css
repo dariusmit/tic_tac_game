@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    background-color: #1A2A33;
+    font-family: "Outfit", sans-serif;
+}
+
 .center {
     transform: translate(-50%, -50%);
 }

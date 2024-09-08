@@ -1,13 +1,24 @@
 import { useEffect, useState } from "react";
 import WinBox from "./components/WinBox";
 import BoardType from "./types/boardType";
+import GameTypeBox from "./components/GameType";
 
 let PlayerClickID = 0;
 let winningMark = "";
 
 function App() {
   let data: BoardType[] = [];
-  let [mark, setMark] = useState("X");
+
+  const savedMark = localStorage.getItem("mark") || "";
+
+  let [mark, setMark] = useState(() => {
+    return savedMark === "" ? "X" : savedMark;
+  });
+
+  useEffect(() => {
+    console.log("mark changed");
+    localStorage.setItem("mark", mark);
+  }, [mark]);
 
   const savedBoardData: BoardType[] = JSON.parse(
     localStorage.getItem("board data") || "[]"
@@ -247,7 +258,7 @@ function App() {
   const savedGameType = localStorage.getItem("game type") || "";
 
   let [gameType, setGameType] = useState(() => {
-    return savedGameType === "" ? "solo" : savedGameType;
+    return savedGameType === "" ? "" : savedGameType;
   });
 
   useEffect(() => {
@@ -425,90 +436,103 @@ function App() {
     }
   }, [playerMove]);
 
-  let [radioStatus, setRadioStatus] = useState(true);
+  function ResetValues() {
+    changeBoard(
+      board.map((prev) => {
+        return { ...prev, mark: "", isClicked: false };
+      })
+    );
+    setMark("X");
+    setXCounter(0);
+    setOCounter(0);
+    setTieCounter(0);
+    setGameType("");
+  }
 
   return (
-    <div className="flex flex-col w-full h-screen">
-      <div className="w-[604px] h-auto mx-auto my-auto">
-        <div className="pb-4">
-          <p>How you want to play?</p>
-          <div className="flex items-center">
-            <p className="pr-2">Solo</p>
-            <input
-              className="mt-[2.5px]"
-              type="radio"
-              onChange={(e) => setGameType(e.target.value)}
-              name="game_type"
-              id="solo"
-              value="solo"
-              checked={radioStatus}
-              onClick={() => setRadioStatus(true)}
-            />
-          </div>
-          <div className="flex items-center">
-            <p className="pr-2">VS computer</p>
-            <input
-              className="mt-[2.5px]"
-              type="radio"
-              onChange={(e) => setGameType(e.target.value)}
-              name="game_type"
-              id="cpu"
-              value="cpu"
-              onClick={() => setRadioStatus(false)}
-            />
-          </div>
-        </div>
-        <div className="flex items-center justify-between [&_div]:pb-4">
+    <div className="flex flex-col w-full h-screen p-[3.73vw]">
+      <div className="w-full h-auto mx-auto">
+        {gameType === "" ? <GameTypeBox setGameType={setGameType} /> : null}
+        <div className="flex items-center justify-between px-[2.67vw] pb-[17.07vw] pt-[6.4vw]">
           <div>
-            <p>XO game</p>
+            <img src="../images/logo.svg" />
           </div>
+          {mark === "X" ? (
+            <div className="flex items-center ml-[-8.5vw] justify-center border-[#0b1114] border-b-4 rounded-[1.33vw] w-[25.5vw] h-[10.67vw] bg-[#1F3641]">
+              <img
+                className="w-[4.27vw] h-[4.27vw] mr-[2.4vw]"
+                src="../images/icon-x-grey.svg"
+              />
+              <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw]">
+                TURN
+              </p>
+            </div>
+          ) : (
+            <div className="flex items-center ml-[-8.5vw] justify-center border-[#0b1114] border-b-4 rounded-[1.33vw] w-[25.5vw] h-[10.67vw] bg-[#1F3641]">
+              <img
+                className="w-[4.27vw] h-[4.27vw] mr-[2.4vw]"
+                src="../images/icon-o-grey.svg"
+              />
+              <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw]">
+                TURN
+              </p>
+            </div>
+          )}
           <div>
-            <p>{mark} Turn</p>
-          </div>
-          <div>
-            <button
-              onClick={() => {
-                changeBoard(
-                  board.map((prev) => {
-                    return { ...prev, mark: "", isClicked: false };
-                  })
-                );
-                setMark("X");
-                setXCounter(0);
-                setOCounter(0);
-                setTieCounter(0);
-              }}
+            <div
+              className="flex items-center justify-center w-[10.67vw] h-[10.67vw] bg-[#A8BFC9] rounded-[1.33vw] border-b-4 border-[#73838a]"
+              onClick={ResetValues}
             >
-              Reset Values
-            </button>
+              <img
+                className="w-[4.1vw] h-[4.1vw]"
+                src="../images/icon-restart.svg"
+              />
+            </div>
           </div>
         </div>
-        <div
-          className="flex border-2 flex-wrap [&_div]:w-[200px]
-    [&_div]:border-2 [&_div]:h-[200px] [&_div]:flex [&_div]:items-center [&_div]:justify-center"
-        >
+        <div className="flex flex-wrap [&_div]:w-[25.5vw] [&_div]:h-[25.5vw] [&_div]:flex [&_div]:items-center [&_div]:justify-center">
           {board.map((item) => {
             return (
-              <div onClick={() => handleClick(item.id)} key={String(item.id)}>
+              <div
+                className="bg-[#1F3641] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]"
+                onClick={() => handleClick(item.id)}
+                key={String(item.id)}
+              >
                 {item.isClicked === true ? (
-                  <p className="font-bold text-2xl">{item.mark}</p>
+                  <p className="font-bold text-2xl">
+                    {item.mark === "X" ? (
+                      <img className="w-[10.67vw]" src="../images/icon-x.svg" />
+                    ) : (
+                      <img className="w-[10.67vw]" src="../images/icon-o.svg" />
+                    )}
+                  </p>
                 ) : null}
               </div>
             );
           })}
         </div>
-        <div className="flex items-center justify-between text-center [&_div]:pt-4">
-          <div>
-            <p>X(YOU)</p>
-            <p>{xCounter}</p>
+        <div className="flex items-center justify-between text-center px-[2.67vw] pt-[2.67vw]">
+          <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#31C3BD] rounded-[2.67vw]">
+            <p className="font-medium text-[3.73vw] tracking-[0.23vw]">
+              X (YOU)
+            </p>
+            <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
+              {xCounter}
+            </p>
           </div>
-          <div>
-            <p>TIES</p>
-            <p>{tieCounter}</p>
+          <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#A8BFC9] rounded-[2.67vw]">
+            <p className="font-medium text-[3.73vw] tracking-[0.23vw]">TIES</p>
+            <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
+              {tieCounter}
+            </p>
           </div>
-          <div>
-            <p>O(CPU)</p>
-            <p>{oCounter}</p>
+          <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#F2B137] rounded-[2.67vw]">
+            <p className="font-medium text-[3.73vw] tracking-[0.23vw]">
+              O (CPU)
+            </p>
+            <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
+              {oCounter}
+            </p>
           </div>
         </div>
       </div>
@@ -518,6 +542,7 @@ function App() {
           SetWinner={SetWinner}
           board={board}
           changeBoard={changeBoard}
+          setGameType={setGameType}
         />
       ) : null}
     </div>
