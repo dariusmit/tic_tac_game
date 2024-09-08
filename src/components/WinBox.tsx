@@ -6,9 +6,10 @@ interface Props {
   SetWinner: React.Dispatch<React.SetStateAction<boolean>>;
   board: BoardType[];
   changeBoard: React.Dispatch<React.SetStateAction<BoardType[]>>;
+  setGameType: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function WinBox({ winner, SetWinner, board, changeBoard }: Props) {
+function WinBox({ winner, SetWinner, board, changeBoard, setGameType }: Props) {
   function colorWinningMarks() {
     if (
       board[0].mark === "X" &&
@@ -338,6 +339,7 @@ function WinBox({ winner, SetWinner, board, changeBoard }: Props) {
 
   function closeAndReset() {
     SetWinner(false);
+    setGameType("");
     changeBoard(
       board.map((prev) => {
         return {
