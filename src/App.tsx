@@ -12,13 +12,31 @@ function App() {
   const savedMark = localStorage.getItem("mark") || "";
 
   let [mark, setMark] = useState(() => {
-    return savedMark === "" ? "X" : savedMark;
+    return savedMark === "" ? "" : savedMark;
+  });
+
+  const savedPlayer1Mark = localStorage.getItem("player 1 mark") || "";
+  const savedPlayer2Mark = localStorage.getItem("player 2 mark") || "";
+
+  let [player1Mark, setPlayer1Mark] = useState(() => {
+    return savedPlayer1Mark === "" ? "" : savedPlayer1Mark;
+  });
+  let [player2Mark, setPlayer2Mark] = useState(() => {
+    return savedPlayer2Mark === "" ? "" : savedPlayer2Mark;
   });
 
   useEffect(() => {
     console.log("mark changed");
     localStorage.setItem("mark", mark);
   }, [mark]);
+
+  useEffect(() => {
+    localStorage.setItem("player 1 mark", player1Mark);
+  }, [player1Mark]);
+
+  useEffect(() => {
+    localStorage.setItem("player 2 mark", player2Mark);
+  }, [player2Mark]);
 
   const savedBoardData: BoardType[] = JSON.parse(
     localStorage.getItem("board data") || "[]"
@@ -76,7 +94,12 @@ function App() {
       board[1].mark === "X" &&
       board[2].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
+      if (player1Mark === "X") {
+        console.log("PLAYER 1 won! Game starts again.");
+      } else {
+        console.log("PLAYER 2 won! Game starts again.");
+      }
+
       setMark("X");
       setXCounter((prev) => Number(prev) + 1);
       winningMark = "X";
@@ -451,8 +474,16 @@ function App() {
 
   return (
     <div className="flex flex-col w-full h-screen p-[3.73vw]">
-      <div className="w-full h-auto mx-auto">
-        {gameType === "" ? <GameTypeBox setGameType={setGameType} /> : null}
+      <div className="w-full h-screen mx-auto">
+        {gameType === "" ? (
+          <GameTypeBox
+            setGameType={setGameType}
+            mark={mark}
+            setMark={setMark}
+            setPlayer1Mark={setPlayer1Mark}
+            setPlayer2Mark={setPlayer2Mark}
+          />
+        ) : null}
         <div className="flex items-center justify-between px-[2.67vw] pb-[17.07vw] pt-[6.4vw]">
           <div>
             <img src="../images/logo.svg" />
@@ -543,6 +574,8 @@ function App() {
           board={board}
           changeBoard={changeBoard}
           setGameType={setGameType}
+          player1Mark={player1Mark}
+          player2Mark={player2Mark}
         />
       ) : null}
     </div>

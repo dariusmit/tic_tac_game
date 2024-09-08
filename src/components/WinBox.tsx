@@ -7,9 +7,19 @@ interface Props {
   board: BoardType[];
   changeBoard: React.Dispatch<React.SetStateAction<BoardType[]>>;
   setGameType: React.Dispatch<React.SetStateAction<string>>;
+  player1Mark: string;
+  player2Mark: string;
 }
 
-function WinBox({ winner, SetWinner, board, changeBoard, setGameType }: Props) {
+function WinBox({
+  winner,
+  SetWinner,
+  board,
+  changeBoard,
+  setGameType,
+  player1Mark,
+  player2Mark,
+}: Props) {
   function colorWinningMarks() {
     if (
       board[0].mark === "X" &&
@@ -352,35 +362,116 @@ function WinBox({ winner, SetWinner, board, changeBoard, setGameType }: Props) {
     );
   }
 
+  function close() {
+    SetWinner(false);
+    changeBoard(
+      board.map((prev) => {
+        return {
+          ...prev,
+          mark: "",
+          isClicked: false,
+          isHighlighted: false,
+        };
+      })
+    );
+  }
+
   return (
     <>
-      <div
-        onClick={() => closeAndReset()}
-        className="fixed w-full h-screen opacity-80 bg-black z-9"
-      />
-      <div
-        onClick={() => closeAndReset()}
-        className="flex flex-col items-center justify-center fixed w-[304px] h-auto bg-white z-99 center top-[50%] left-[50%]"
-      >
-        <p className="text-red-500">
-          {winner === "Tie" ? "It's a Draw" : winner + " won"}
+      <div className="fixed w-full h-screen opacity-80 bg-black z-9" />
+      <div className="flex flex-col items-center justify-center fixed w-full h-screen bg-[#1A2A33] z-99 center top-[50%] left-[50%]">
+        <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw] mt-[10.67vw] mb-[4.27vw]">
+          {winner === "Tie"
+            ? "ROUND TIED"
+            : winner === "X"
+            ? player1Mark === "X"
+              ? "PLAYER 1 WINS!"
+              : "PLAYER 2 WINS!"
+            : winner === "O"
+            ? player1Mark === "O"
+              ? "PLAYER 1 WINS!"
+              : "PLAYER 2 WINS!"
+            : null}
         </p>
-        <div className="flex border-2 flex-wrap [&_div]:w-[100px] [&_div]:border-2 [&_div]:h-[100px] [&_div]:flex [&_div]:items-center [&_div]:justify-center">
+        {winner === "X" ? (
+          <div className="flex items-center mb-[6.4vw]">
+            <img
+              className="w-[8vw] h-[8vw] mr-[2.13vw]"
+              src="../../images/icon-x.svg"
+            />
+            <p className="text-[#F2B137] font-bold text-[6.4vw] tracking-[0.4vw]">
+              TAKES THE ROUND
+            </p>
+          </div>
+        ) : null}
+        {winner === "O" ? (
+          <div className="flex items-center mb-[6.4vw]">
+            <img
+              className="w-[8vw] h-[8vw] mr-[2.13vw]"
+              src="../../images/icon-o.svg"
+            />
+            <p className="text-[#F2B137] font-bold text-[6.4vw] tracking-[0.4vw]">
+              TAKES THE ROUND
+            </p>
+          </div>
+        ) : null}
+
+        <div className="flex flex-wrap justify-center [&_div]:w-[25.5vw] [&_div]:h-[25.5vw] [&_div]:flex [&_div]:items-center [&_div]:justify-center">
           {board.map((item) => {
             return (
-              <div key={String(item.id)}>
+              <div
+                className={
+                  item.isHighlighted === true
+                    ? item.mark === "X"
+                      ? "bg-[#31C3BD] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]"
+                      : "bg-[#F2B137] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]"
+                    : item.mark === "O"
+                    ? "bg-[#1F3641] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]"
+                    : "bg-[#1F3641] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]"
+                }
+                key={String(item.id)}
+              >
                 {item.isClicked === true ? (
-                  <p
-                    className={
-                      item.isHighlighted === true ? "text-red-500" : ""
-                    }
-                  >
-                    {item.mark}
+                  <p className="font-bold text-2xl">
+                    {item.mark === "X" ? (
+                      item.isHighlighted === true ? (
+                        <img
+                          className="w-[10.67vw]"
+                          src="../images/icon-x-dark-navy.svg"
+                        />
+                      ) : (
+                        <img
+                          className="w-[10.67vw]"
+                          src="../images/icon-x.svg"
+                        />
+                      )
+                    ) : item.isHighlighted === true ? (
+                      <img
+                        className="w-[10.67vw]"
+                        src="../images/icon-o-dark-navy.svg"
+                      />
+                    ) : (
+                      <img className="w-[10.67vw]" src="../images/icon-o.svg" />
+                    )}
                   </p>
                 ) : null}
               </div>
             );
           })}
+        </div>
+        <div className="flex mb-[12.8vw]">
+          <button
+            onClick={() => closeAndReset()}
+            className="bg-[#A8BFC9] mr-[4.27vw] font-bold text-[4.27vw] tracking-[0.27vw] border-[#78888f] rounded-[2.67vw] border-b-4 w-[20.27vw] h-[13.87vw]"
+          >
+            QUIT
+          </button>
+          <button
+            onClick={() => close()}
+            className="bg-[#F2B137] font-bold text-[4.27vw] tracking-[0.27vw] border-[#a17625] rounded-[2.67vw] border-b-4 w-[38.93vw] h-[13.87vw]"
+          >
+            NEXT ROUND
+          </button>
         </div>
       </div>
     </>
