@@ -8,7 +8,10 @@ interface Props {
   changeBoard: React.Dispatch<React.SetStateAction<BoardType[]>>;
   setGameType: React.Dispatch<React.SetStateAction<string>>;
   player1Mark: string;
-  player2Mark: string;
+  setXCounter: React.Dispatch<React.SetStateAction<number>>;
+  setOCounter: React.Dispatch<React.SetStateAction<number>>;
+  setTieCounter: React.Dispatch<React.SetStateAction<number>>;
+  gameType: string;
 }
 
 function WinBox({
@@ -18,6 +21,10 @@ function WinBox({
   changeBoard,
   setGameType,
   player1Mark,
+  setXCounter,
+  setOCounter,
+  setTieCounter,
+  gameType,
 }: Props) {
   function colorWinningMarks() {
     if (
@@ -359,6 +366,9 @@ function WinBox({
         };
       })
     );
+    setXCounter(0);
+    setOCounter(0);
+    setTieCounter(0);
   }
 
   function close() {
@@ -382,14 +392,25 @@ function WinBox({
         <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw] mt-[10.67vw] mb-[4.27vw]">
           {winner === "Tie"
             ? "ROUND TIED"
-            : winner === "X"
+            : winner === "X" && gameType === "multiplayer"
             ? player1Mark === "X"
               ? "PLAYER 1 WINS!"
               : "PLAYER 2 WINS!"
-            : winner === "O"
+            : winner === "O" && gameType === "multiplayer"
             ? player1Mark === "O"
               ? "PLAYER 1 WINS!"
               : "PLAYER 2 WINS!"
+            : null}
+          {winner === "Tie"
+            ? "ROUND TIED"
+            : winner === "X" && gameType === "cpu"
+            ? player1Mark === "X"
+              ? "YOU WON!"
+              : "OH NO, YOU LOST..."
+            : winner === "O" && gameType === "cpu"
+            ? player1Mark === "O"
+              ? "YOU WON!"
+              : "OH NO, YOU LOST..."
             : null}
         </p>
         {winner === "X" ? (

@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
 import WinBox from "./components/WinBox";
 import BoardType from "./types/boardType";
-import GameTypeBox from "./components/GameType";
+import GameTypeBox from "./components/GameTypeBox";
+import RestartBox from "./components/RestartBox";
 
 let PlayerClickID = 0;
-let winningMark = "";
 
 function App() {
   let data: BoardType[] = [];
+
+  const savedWinningMark = localStorage.getItem("winning mark") || "";
+
+  let [winningMark, setWinningMark] = useState(() => {
+    return savedWinningMark;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("winning mark", winningMark);
+  }, [winningMark]);
 
   const savedMark = localStorage.getItem("mark") || "";
 
@@ -26,7 +36,6 @@ function App() {
   });
 
   useEffect(() => {
-    console.log("mark changed");
     localStorage.setItem("mark", mark);
   }, [mark]);
 
@@ -66,213 +75,209 @@ function App() {
   let [tieCounter, setTieCounter] = useState(() => {
     return Number(savedTieCounter) > 0 ? Number(savedTieCounter) : 0;
   });
-  let [winner, SetWinner] = useState(false);
+
+  const savedWinnerState = JSON.parse(
+    localStorage.getItem("winner modal") || "false"
+  );
+
+  let [winner, SetWinner] = useState(() => {
+    return savedWinnerState;
+  });
 
   useEffect(() => {
-    console.log("x win count changed");
+    localStorage.setItem("winner modal", String(winner));
+  }, [winner]);
+
+  useEffect(() => {
     localStorage.setItem("x win count", String(xCounter));
   }, [xCounter]);
 
   useEffect(() => {
-    console.log("o win count changed");
     localStorage.setItem("o win count", String(oCounter));
   }, [oCounter]);
 
   useEffect(() => {
-    console.log("tie win count changed");
     localStorage.setItem("tie win count", String(tieCounter));
   }, [tieCounter]);
 
   //Winning Logic
   useEffect(() => {
     updateEmptyCellsObject(board.filter((prev) => prev.isClicked === false));
-    console.log("board data changed");
     localStorage.setItem("board data", JSON.stringify(board));
-    //X winning logic
     if (
       board[0].mark === "X" &&
       board[1].mark === "X" &&
       board[2].mark === "X"
     ) {
-      if (player1Mark === "X") {
-        console.log("PLAYER 1 won! Game starts again.");
-      } else {
-        console.log("PLAYER 2 won! Game starts again.");
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
       }
-
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
     } else if (
       board[3].mark === "X" &&
       board[4].mark === "X" &&
       board[5].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
     } else if (
       board[6].mark === "X" &&
       board[7].mark === "X" &&
       board[8].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
     } else if (
       board[0].mark === "X" &&
       board[3].mark === "X" &&
       board[6].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
     } else if (
       board[1].mark === "X" &&
       board[4].mark === "X" &&
       board[7].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
     } else if (
       board[2].mark === "X" &&
       board[5].mark === "X" &&
       board[8].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
     } else if (
       board[0].mark === "X" &&
       board[4].mark === "X" &&
       board[8].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
     } else if (
       board[6].mark === "X" &&
       board[4].mark === "X" &&
       board[2].mark === "X"
     ) {
-      console.log("X won! Game starts again.");
-      setMark("X");
-      setXCounter((prev) => Number(prev) + 1);
-      winningMark = "X";
-      SetWinner(true);
-    }
-    //O winning logic
-    if (
+      if (winner === false) {
+        setXCounter((prev) => prev + 1);
+        setWinningMark("X");
+        SetWinner(true);
+      }
+    } else if (
       board[0].mark === "O" &&
       board[1].mark === "O" &&
       board[2].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[3].mark === "O" &&
       board[4].mark === "O" &&
       board[5].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[6].mark === "O" &&
       board[7].mark === "O" &&
       board[8].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[0].mark === "O" &&
       board[3].mark === "O" &&
       board[6].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[1].mark === "O" &&
       board[4].mark === "O" &&
       board[7].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[2].mark === "O" &&
       board[5].mark === "O" &&
       board[8].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[0].mark === "O" &&
       board[4].mark === "O" &&
       board[8].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
     } else if (
       board[6].mark === "O" &&
       board[4].mark === "O" &&
       board[2].mark === "O"
     ) {
-      console.log("O won! Game starts again.");
-      setMark("X");
-      setOCounter((prev) => Number(prev) + 1);
-      winningMark = "O";
-      SetWinner(true);
-    } else {
-      //A draw case. If no winners emerged.
-      if (
-        board[0].isClicked === true &&
-        board[1].isClicked === true &&
-        board[2].isClicked === true &&
-        board[3].isClicked === true &&
-        board[4].isClicked === true &&
-        board[5].isClicked === true &&
-        board[6].isClicked === true &&
-        board[7].isClicked === true &&
-        board[8].isClicked === true
-      ) {
-        console.log("A Tie! Game starts again.");
-        setMark("X");
-        setTieCounter((prev) => Number(prev) + 1);
-        winningMark = "Tie";
+      if (winner === false) {
+        setOCounter((prev) => prev + 1);
+        setWinningMark("O");
+        SetWinner(true);
+      }
+    } else if (
+      board[0].isClicked === true &&
+      board[1].isClicked === true &&
+      board[2].isClicked === true &&
+      board[3].isClicked === true &&
+      board[4].isClicked === true &&
+      board[5].isClicked === true &&
+      board[6].isClicked === true &&
+      board[7].isClicked === true &&
+      board[8].isClicked === true
+    ) {
+      if (winner === false) {
+        setTieCounter((prev) => prev + 1);
+        setWinningMark("Tie");
         SetWinner(true);
       }
     }
@@ -298,7 +303,7 @@ function App() {
   }
 
   function handleClick(id: number) {
-    if (gameType === "solo") {
+    if (gameType === "multiplayer") {
       changeBoard(
         board.map((prev) => {
           if (prev.id === id) {
@@ -324,7 +329,6 @@ function App() {
         if (cpuMoveCount === 0) {
           changeBoard(
             board.map((prev) => {
-              console.log("Player clicked at id of " + id);
               if (prev.id === id && prev.isClicked === false) {
                 registerPlayerMove((prev) => (prev += 1));
                 setMark("O");
@@ -337,7 +341,6 @@ function App() {
         if (cpuMoveCount > 0) {
           changeBoard(
             board.map((prev) => {
-              console.log("Player clicked at id of " + id);
               if (prev.id === id && prev.isClicked === false) {
                 registerPlayerMove((prev) => (prev += 1));
                 setMark("O");
@@ -352,7 +355,6 @@ function App() {
         if (cpuMoveCount === 0) {
           changeBoard(
             board.map((prev) => {
-              console.log("Player clicked at id of " + id);
               if (prev.id === id && prev.isClicked === false) {
                 registerPlayerMove((prev) => (prev += 1));
                 setMark("O");
@@ -365,7 +367,6 @@ function App() {
         if (cpuMoveCount > 0) {
           changeBoard(
             board.map((prev) => {
-              console.log("Player clicked at id of " + id);
               if (prev.id === id && prev.isClicked === false) {
                 registerPlayerMove((prev) => (prev += 1));
                 setMark("O");
@@ -410,16 +411,9 @@ function App() {
     randomNumber = getRandomNumber();
     if (gameType === "cpu") {
       if (mark === "O") {
-        console.log("Player move registered");
-        console.log("CPU is thinking");
-
         changeBoard(
           board.map((prev) => {
-            console.log(
-              "prev.id " + prev.id + " Random number " + randomNumber
-            );
             if (prev.id === randomNumber) {
-              console.log("CPU responded");
               setMark("X");
               return {
                 ...prev,
@@ -433,16 +427,9 @@ function App() {
 
         increaseCpuMoveCount((prev) => (prev += 1));
       } else if (mark === "X") {
-        console.log("Player move registered");
-        console.log("CPU is thinking");
-
         changeBoard(
           board.map((prev) => {
-            console.log(
-              "prev.id " + prev.id + " Random number " + randomNumber
-            );
             if (prev.id === randomNumber) {
-              console.log("CPU responded");
               setMark("O");
               return {
                 ...prev,
@@ -459,18 +446,17 @@ function App() {
     }
   }, [playerMove]);
 
-  function ResetValues() {
-    changeBoard(
-      board.map((prev) => {
-        return { ...prev, mark: "", isClicked: false };
-      })
-    );
-    setMark("X");
-    setXCounter(0);
-    setOCounter(0);
-    setTieCounter(0);
-    setGameType("");
-  }
+  const savedRestartModalState = JSON.parse(
+    localStorage.getItem("restart modal") || "false"
+  );
+
+  let [restartModal, OpenRestartModel] = useState(() => {
+    return savedRestartModalState;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("restart modal", String(restartModal));
+  }, [restartModal]);
 
   return (
     <div className="flex flex-col w-full h-screen p-[3.73vw]">
@@ -512,7 +498,7 @@ function App() {
           <div>
             <div
               className="flex items-center justify-center w-[10.67vw] h-[10.67vw] bg-[#A8BFC9] rounded-[1.33vw] border-b-4 border-[#73838a]"
-              onClick={ResetValues}
+              onClick={() => OpenRestartModel(true)}
             >
               <img
                 className="w-[4.1vw] h-[4.1vw]"
@@ -545,7 +531,15 @@ function App() {
         <div className="flex items-center justify-between text-center px-[2.67vw] pt-[2.67vw]">
           <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#31C3BD] rounded-[2.67vw]">
             <p className="font-medium text-[3.73vw] tracking-[0.23vw]">
-              X (YOU)
+              X (
+              {gameType === "multiplayer"
+                ? player1Mark === "X"
+                  ? "P1"
+                  : "P2"
+                : player1Mark === "X"
+                ? "YOU"
+                : "CPU"}
+              )
             </p>
             <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
               {xCounter}
@@ -559,7 +553,15 @@ function App() {
           </div>
           <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#F2B137] rounded-[2.67vw]">
             <p className="font-medium text-[3.73vw] tracking-[0.23vw]">
-              O (CPU)
+              O (
+              {gameType === "multiplayer"
+                ? player1Mark === "O"
+                  ? "P1"
+                  : "P2"
+                : player1Mark === "O"
+                ? "YOU"
+                : "CPU"}
+              )
             </p>
             <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
               {oCounter}
@@ -575,7 +577,19 @@ function App() {
           changeBoard={changeBoard}
           setGameType={setGameType}
           player1Mark={player1Mark}
-          player2Mark={player2Mark}
+          setXCounter={setXCounter}
+          setOCounter={setOCounter}
+          setTieCounter={setTieCounter}
+          gameType={gameType}
+        />
+      ) : null}
+      {restartModal ? (
+        <RestartBox
+          SetWinner={SetWinner}
+          board={board}
+          changeBoard={changeBoard}
+          setMark={setMark}
+          OpenRestartModel={OpenRestartModel}
         />
       ) : null}
     </div>

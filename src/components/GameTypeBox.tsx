@@ -16,13 +16,28 @@ function GameTypeBox({
   return (
     <>
       <div className="fixed w-full h-screen bg-[#1A2A33] z-9"></div>
-      <div className="flex fixed w-full h-auto center top-[50%] left-[50%] z-99 flex-col justify-center text-center items-center px-[6.4vw]">
-        <img className="mb-[8.53vw]" src="../../images/logo.svg" />
-        <div className="bg-[#1F3641] w-full rounded-[4vw] border-[#111e24] border-b-8 p-[6.4vw] mb-[8.53vw]">
-          <p className="font-bold text-[4.27vw] mb-[6.4vw] tracking-[0.27vw] text-[#A8BFC9]">
+      <div
+        className="flex fixed w-full h-auto center top-[50%] left-[50%] z-99 flex-col justify-center text-center items-center px-[6.4vw]
+      tablet:w-[460px]"
+      >
+        <img
+          className="mb-[8.53vw] tablet:mb-[5.21vw]"
+          src="../../images/logo.svg"
+        />
+        <div
+          className="bg-[#1F3641] w-full rounded-[4vw] border-[#111e24] border-b-8 p-[6.4vw] mb-[8.53vw]
+        tablet:rounded-[1.95vw] tablet:p-[6.4vw] tablet:mb-[5.21vw]"
+        >
+          <p
+            className="font-bold text-[4.27vw] mb-[6.4vw] tracking-[0.27vw] text-[#A8BFC9]
+          tablet:text-[2.08vw] tablet:mb-[4.3vw] tablet:tracking-[0.13vw]"
+          >
             PICK PLAYER 1'S MARK?
           </p>
-          <div className="flex items-center bg-[#1A2A33] rounded-[2.67vw] mb-[4.53vw] px-[2.4vw]">
+          <div
+            className="flex items-center bg-[#1A2A33] rounded-[2.67vw] mb-[4.53vw] px-[2.4vw]
+          tablet:rounded-[1.3vw] tablet:mb-[2.21vw] tablet:px-[1.04vw] "
+          >
             <div
               onClick={() => {
                 setMark("X");
@@ -82,7 +97,7 @@ function GameTypeBox({
         <button
           className="w-full h-[14.93vw] bg-[#31C3BD] rounded-[4vw] text-[#1A2A33] font-bold tracking-[0.27vw] border-[#1e7471] border-b-8"
           onClick={() => {
-            setGameType("solo");
+            setGameType("multiplayer");
             setMark("X");
           }}
         >
