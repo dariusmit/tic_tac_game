@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import WinBox from "./components/WinBox";
 import BoardType from "./types/boardType";
-import GameTypeBox from "./components/GameTypeBox";
+import NewGameBox from "./components/NewGameBox";
 import RestartBox from "./components/RestartBox";
 
 let PlayerClickID = 0;
@@ -459,10 +459,10 @@ function App() {
   }, [restartModal]);
 
   return (
-    <div className="flex flex-col w-full h-screen p-[3.73vw]">
-      <div className="w-full h-screen mx-auto">
+    <div className="flex flex-col w-full h-screen p-[3.73vw] tablet:px-[18.75vw] tablet:py-[5vw] desktop:px-[34.03vw] desktop:py-[2.5vw]">
+      <div className="w-full h-screen mx-auto tablet:mx-0 tablet:w-[59.9vw] desktop:w-[31.94vw]">
         {gameType === "" ? (
-          <GameTypeBox
+          <NewGameBox
             setGameType={setGameType}
             mark={mark}
             setMark={setMark}
@@ -470,57 +470,81 @@ function App() {
             setPlayer2Mark={setPlayer2Mark}
           />
         ) : null}
-        <div className="flex items-center justify-between px-[2.67vw] pb-[17.07vw] pt-[6.4vw]">
+        <div
+          className="flex items-center justify-between px-[2.67vw] pb-[17.07vw] pt-[6.4vw] tablet:px-[1.3vw] tablet:pb-[2.47vw] tablet:pt-0
+        desktop:px-[0.69vw] desktop:pb-[1.39vw]"
+        >
           <div>
             <img src="../images/logo.svg" />
           </div>
           {mark === "X" ? (
-            <div className="flex items-center ml-[-8.5vw] justify-center border-[#0b1114] border-b-4 rounded-[1.33vw] w-[25.5vw] h-[10.67vw] bg-[#1F3641]">
+            <div
+              className="flex z-[-99] absolute center top-[16vw] left-[50%] items-center justify-center border-[#0b1114] border-b-4 rounded-[1.33vw] w-[24.3vw] h-[10.67vw] bg-[#1F3641]
+            tablet:ml-[-2.5vw] tablet:border-b-[0.52vw] tablet:rounded-[1.3vw] tablet:w-[17.23vw] tablet:h-[6.77vw] tablet:top-[8.8vw] tablet:left-[51.2vw]
+            desktop:ml-[-1.5vw] desktop:border-b-[0.28vw] desktop:rounded-[0.69vw] desktop:w-[9.26vw] desktop:h-[3.61vw] desktop:top-[4.37vw] desktop:left-[51.5vw]"
+            >
               <img
-                className="w-[4.27vw] h-[4.27vw] mr-[2.4vw]"
+                className="w-[4.27vw] h-[4.27vw] mr-[2.4vw] tablet:w-[2.6vw] tablet:h-[2.6vw] tablet:mr-[1.69vw] desktop:w-[1.39vw] desktop:h-[1.39vw] desktop:mr-[0.9vw]"
                 src="../images/icon-x-grey.svg"
               />
-              <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw]">
+              <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw] tablet:text-[2.08vw] tablet:tracking-[0.13vw] desktop:text-[1.11vw] desktop:tracking-[0.069vw]">
                 TURN
               </p>
             </div>
           ) : (
-            <div className="flex items-center ml-[-8.5vw] justify-center border-[#0b1114] border-b-4 rounded-[1.33vw] w-[25.5vw] h-[10.67vw] bg-[#1F3641]">
+            <div
+              className="flex z-[-99] absolute center top-[16vw] left-[50%] items-center justify-center border-[#0b1114] border-b-4 rounded-[1.33vw] w-[24.3vw] h-[10.67vw] bg-[#1F3641]
+            tablet:ml-[-2.5vw] tablet:border-b-[0.52vw] tablet:rounded-[1.3vw] tablet:w-[17.23vw] tablet:h-[6.77vw] tablet:top-[8.8vw] tablet:left-[51.2vw]
+            desktop:ml-[-1.5vw] desktop:border-b-[0.28vw] desktop:rounded-[0.69vw] desktop:w-[9.26vw] desktop:h-[3.61vw] desktop:top-[4.37vw] desktop:left-[51.5vw]"
+            >
               <img
-                className="w-[4.27vw] h-[4.27vw] mr-[2.4vw]"
+                className="w-[4.27vw] h-[4.27vw] mr-[2.4vw] tablet:w-[2.6vw] tablet:h-[2.6vw] tablet:mr-[1.69vw] desktop:w-[1.39vw] desktop:h-[1.39vw] desktop:mr-[0.9vw]"
                 src="../images/icon-o-grey.svg"
               />
-              <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw]">
+              <p className="text-[#A8BFC9] font-bold text-[3.73vw] tracking-[0.23vw] tablet:text-[2.08vw] tablet:tracking-[0.13vw] desktop:text-[1.11vw] desktop:tracking-[0.069vw]">
                 TURN
               </p>
             </div>
           )}
           <div>
             <div
-              className="flex items-center justify-center w-[10.67vw] h-[10.67vw] bg-[#A8BFC9] rounded-[1.33vw] border-b-4 border-[#73838a]"
+              className="flex items-center justify-center w-[10.67vw] h-[10.67vw] bg-[#A8BFC9] rounded-[1.33vw] border-b-4 border-[#73838a]
+              tablet:w-[6.77vw] tablet:h-[6.77vw] tablet:rounded-[1.3vw] tablet:border-b-[0.52vw]
+              desktop:w-[3.61vw] desktop:h-[3.61vw] desktop:rounded-[0.69vw] desktop:border-b-[0.28vw]"
               onClick={() => OpenRestartModel(true)}
             >
               <img
-                className="w-[4.1vw] h-[4.1vw]"
+                className="w-[4.1vw] h-[4.1vw] tablet:w-[2.6vw] tablet:h-[2.6vw] desktop:w-[1.39vw] desktop:h-[1.39vw]"
                 src="../images/icon-restart.svg"
               />
             </div>
           </div>
         </div>
-        <div className="flex flex-wrap [&_div]:w-[25.5vw] [&_div]:h-[25.5vw] [&_div]:flex [&_div]:items-center [&_div]:justify-center">
+        <div
+          className="flex flex-wrap justify-center [&_div]:w-[24.3vw] [&_div]:h-[24.3vw] [&_div]:flex [&_div]:items-center [&_div]:justify-center
+        tablet:[&_div]:w-[17.35vw] tablet:[&_div]:h-[18.23vw] desktop:[&_div]:w-[9.26vw] desktop:[&_div]:h-[9.26vw]"
+        >
           {board.map((item) => {
             return (
               <div
-                className="bg-[#1F3641] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]"
+                className="bg-[#1F3641] rounded-[2.67vw] border-[#0b1114] border-b-8 mx-[2.67vw] mb-[5.33vw]
+                tablet:rounded-[1.95vw] tablet:border-b-[1.04vw] tablet:mx-[1.3vw] tablet:mb-[2.73vw]
+                desktop:rounded-[1.04vw] desktop:border-b-[0.56vw] desktop:mx-[0.69vw] desktop:mb-[1.39vw]"
                 onClick={() => handleClick(item.id)}
                 key={String(item.id)}
               >
                 {item.isClicked === true ? (
-                  <p className="font-bold text-2xl">
+                  <p>
                     {item.mark === "X" ? (
-                      <img className="w-[10.67vw]" src="../images/icon-x.svg" />
+                      <img
+                        className="w-[10.67vw] tablet:w-[8.33vw] desktop:w-[4.38vw]"
+                        src="../images/icon-x.svg"
+                      />
                     ) : (
-                      <img className="w-[10.67vw]" src="../images/icon-o.svg" />
+                      <img
+                        className="w-[10.67vw] tablet:w-[8.33vw] desktop:w-[4.38vw]"
+                        src="../images/icon-o.svg"
+                      />
                     )}
                   </p>
                 ) : null}
@@ -528,9 +552,13 @@ function App() {
             );
           })}
         </div>
-        <div className="flex items-center justify-between text-center px-[2.67vw] pt-[2.67vw]">
-          <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#31C3BD] rounded-[2.67vw]">
-            <p className="font-medium text-[3.73vw] tracking-[0.23vw]">
+        <div className="flex items-center justify-between text-center px-[2.67vw] pt-[2.67vw] tablet:px-[1.3vw] tablet:pt-0 desktop:px-[0.69vw]">
+          <div
+            className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#31C3BD] rounded-[2.67vw]
+          tablet:w-[17.32vw] tablet:h-[9.38vw] tablet:rounded-[1.95vw]
+          desktop:w-[9.72vw] desktop:h-[5vw] desktop:rounded-[1.04vw]"
+          >
+            <p className="font-medium text-[3.73vw] tracking-[0.23vw] tablet:text-[1.82vw] tablet:tracking-[0.11vw] desktop:text-[0.97vw] desktop:tracking-[0.06vw]">
               X (
               {gameType === "multiplayer"
                 ? player1Mark === "X"
@@ -541,18 +569,27 @@ function App() {
                 : "CPU"}
               )
             </p>
-            <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
+            <p className="font-bold text-[5.33vw] tracking-[0.33vw] tablet:text-[3.13vw] tablet:tracking-[0.2vw] desktop:text-[1.67vw] desktop:tracking-[0.1vw]">
               {xCounter}
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#A8BFC9] rounded-[2.67vw]">
-            <p className="font-medium text-[3.73vw] tracking-[0.23vw]">TIES</p>
-            <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
+          <div
+            className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#A8BFC9] rounded-[2.67vw]
+          tablet:w-[17.32vw] tablet:h-[9.38vw] tablet:rounded-[1.95vw]
+          desktop:w-[9.72vw] desktop:h-[5vw] desktop:rounded-[1.04vw]"
+          >
+            <p className="font-medium text-[3.73vw] tracking-[0.23vw] tablet:text-[1.82vw] tablet:tracking-[0.11vw] desktop:text-[0.97vw] desktop:tracking-[0.06vw]">
+              TIES
+            </p>
+            <p className="font-bold text-[5.33vw] tracking-[0.33vw] tablet:text-[3.13vw] tablet:tracking-[0.2vw] desktop:text-[1.67vw] desktop:tracking-[0.1vw]">
               {tieCounter}
             </p>
           </div>
-          <div className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#F2B137] rounded-[2.67vw]">
-            <p className="font-medium text-[3.73vw] tracking-[0.23vw]">
+          <div
+            className="flex flex-col items-center justify-center w-[25.6vw] h-[17.07vw] bg-[#F2B137] rounded-[2.67vw]
+          tablet:w-[17.32vw] tablet:h-[9.38vw] tablet:rounded-[1.95vw] desktop:w-[9.72vw] desktop:h-[5vw] desktop:rounded-[1.04vw]"
+          >
+            <p className="font-medium text-[3.73vw] tracking-[0.23vw] tablet:text-[1.82vw] tablet:tracking-[0.11vw] desktop:text-[0.97vw] desktop:tracking-[0.06vw]">
               O (
               {gameType === "multiplayer"
                 ? player1Mark === "O"
@@ -563,7 +600,7 @@ function App() {
                 : "CPU"}
               )
             </p>
-            <p className="font-bold text-[5.33vw] tracking-[0.33vw]">
+            <p className="font-bold text-[5.33vw] tracking-[0.33vw] tablet:text-[3.13vw] tablet:tracking-[0.2vw] desktop:text-[1.67vw] desktop:tracking-[0.1vw]">
               {oCounter}
             </p>
           </div>
